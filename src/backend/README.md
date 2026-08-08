@@ -1,4 +1,4 @@
-# OrthoRehab AI — Backend (Steps 1, 2 & 3)
+# OrthoRehab AI — Backend (Steps 1, 2, 3 & 4)
 
 The OrthoRehab AI backend processes a **reference exercise video** through a
 pipeline that will feed later steps (DTW comparison, session
@@ -18,6 +18,8 @@ OrthoRehab upper-body filter (hip-and-above subset)   (Step 1)
 joint angles (hip-and-above)                          (Step 2 — angle engine)
       ↓
 phase detection + rep counting                        (Step 3 — phase/rep counter)
+      ↓
+reference exercise profile (JSON)                    (Step 4 — reference profile)
 ```
 
 **Scope:** OrthoRehab focuses on **hip-and-above** rehabilitation. MediaPipe
@@ -37,20 +39,24 @@ calculations (the Step 2 angle engine enforces a visibility threshold).
 backend/
 ├── src/
 │   └── pose/
-│       ├── __init__.py                 # exports Steps 1, 2 & 3 public API
+│       ├── __init__.py                 # exports Steps 1, 2, 3 & 4 public API
 │       ├── video_processor.py          # OpenCV video reading (frames + fps + timestamps)
 │       ├── landmark_extractor.py       # Step 1: MediaPipe pose + 33-landmark extraction
 │       ├── angle_engine.py             # Step 2: config-driven joint-angle engine
 │       ├── exercise_config.py          # Step 3: per-exercise phase/rep configuration
 │       ├── phase_detector.py           # Step 3: smoothing + state machine + rep validation
-│       └── phase_rep_counter.py        # Step 3: ExerciseAnalysis facade / primary-angle select
+│       ├── phase_rep_counter.py        # Step 3: ExerciseAnalysis facade / primary-angle select
+│       ├── reference_profile.py        # Step 4: profile data model + JSON serialization
+│       └── reference_profile_builder.py# Step 4: build_reference_profile facade
 ├── tests/
 │   ├── test_landmark_extraction.py     # Step 1 CLI test runner for a given video
 │   ├── test_angle_engine.py            # Step 2 unit tests (synthetic, no video needed)
-│   └── test_phase_detector.py          # Step 3 unit tests (synthetic sequences)
+│   ├── test_phase_detector.py          # Step 3 unit tests (synthetic sequences)
+│   └── test_reference_profile.py       # Step 4 unit tests (synthetic sequences)
 ├── tools/
 │   ├── validate_angle_engine.py        # Step 2 real-video diagnostic + annotated video
-│   └── validate_phase_rep_counter.py   # Step 3 real-video diagnostic + annotated video
+│   ├── validate_phase_rep_counter.py   # Step 3 real-video diagnostic + annotated video
+│   └── validate_reference_profile.py   # Step 4 real-video diagnostic + JSON profile
 ├── requirements.txt
 └── README.md
 ```
@@ -191,10 +197,57 @@ The tool writes `output/reference_phase_rep_annotated.mp4` showing the
 upper-body skeleton, the primary joint angle, the current phase, and the
 current rep count.
 
+## Step 4 — reference exercise profile
+
+`reference_profile_builder.build_reference_profile()` turns the outputs of
+Steps 1-3 into a compact, reusable `ReferenceExerciseProfile`. It never embeds
+the raw video or raw MediaPipe frames; it stores only the information needed for
+a future DTW / patient-comparison stage.
+
+- **Data model** (`reference_profile.ReferenceExerciseProfile`): exercise id /
+  name, created timestamp, source-video metadata, primary angle, movement type,
+  supported + available landmarks, per-angle statistics (primary + bilateral),
+  phase profile, validated repetitions, normalized reference trajectory, and the
+  configuration thresholds used.
+- **Normalized trajectory** (`ReferenceTrajectory`): each validated complete
+  repetition is resampled to 21 evenly spaced progress values (0%, 5%, ...,
+  100%) via linear interpolation over the smoothed primary-angle series, then
+  averaged across repetitions to form a representative cycle. If there is only
+  one valid repetition, that cycle is used directly (no fake averaging). This
+  makes the reference comparable to a patient session independently of absolute
+  speed. Original frame indices/timestamps are preserved per repetition for
+  diagnostics.
+- **Bilateral info**: angle statistics are retained for every angle name found
+  in the Step 2 sequence (e.g. both `left_elbow` and `right_elbow`), not just
+  the primary angle.
+- **Scope**: only hip-and-above landmarks (shoulders, elbows, wrists, hips) are
+  listed as supported/required. No knees/ankles/feet.
+- **JSON serialization**: every profile dataclass has `to_dict()` and
+  `from_dict()`, so a profile can be written to disk now and persisted in MongoDB
+  later without coupling the CV code to Mongo.
+
+### Run Step 4 tests
+
+```powershell
+cd D:\TECHFORGOOD\OrthoRehab-AI\backend
+python -m tests.test_reference_profile
+```
+
+### Run Step 4 real-video validation (generates JSON profile)
+
+```powershell
+cd D:\TECHFORGOOD\OrthoRehab-AI\backend
+python -m tools.validate_reference_profile "D:\TECHFORGOOD\health-team-264-trixel\src\REFERENCE VIDEOS\reference_video.mp4"
+```
+
+The tool writes `output/reference_exercise_profile.json` with the full profile
+and prints a readable summary (exercise, primary joint, reps, angle statistics,
+phase sequence, normalized trajectory, landmarks, source metadata).
+
 ## Notes
 
-- Steps 1 (video → landmarks), 2 (landmarks → angles) and 3 (phases → rep
-  count) are implemented.
+- Steps 1 (video → landmarks), 2 (landmarks → angles), 3 (phases → rep count)
+  and 4 (reference exercise profile) are implemented.
 - DTW, browser webcam, MongoDB, FastAPI routes, auth, reports, email, and Groq
   are intentionally **not** implemented yet.
 - The LSTM model from `FitPose-Detector` is **not** used.

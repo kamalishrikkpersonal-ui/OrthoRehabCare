@@ -5,6 +5,7 @@ Step 1: reference video -> ordered upper-body landmark sequence
          hip-and-above subset).
 Step 2: landmark sequence -> joint-angle sequence.
 Step 3: angle sequence -> exercise phases + repetition count.
+Step 4: phases/reps + angles -> reusable reference exercise profile.
 """
 
 from .angle_engine import (
@@ -43,6 +44,21 @@ from .phase_rep_counter import (
     count_reps,
     select_primary_angle,
 )
+from .reference_profile import (
+    ReferenceAngleStatistics,
+    ReferenceConfiguration,
+    ReferenceExerciseProfile,
+    ReferencePhaseEvent,
+    ReferencePhaseProfile,
+    ReferenceRepetition,
+    ReferenceSourceVideo,
+    ReferenceTrajectory,
+    ReferenceTrajectoryPoint,
+    now_iso,
+)
+from .reference_profile_builder import (
+    build_reference_profile,
+)
 from .video_processor import iter_video_frames
 
 __all__ = [
@@ -78,4 +94,16 @@ __all__ = [
     "ExerciseAnalysis",
     "count_reps",
     "select_primary_angle",
+    # Step 4 reference profile
+    "ReferenceExerciseProfile",
+    "ReferenceAngleStatistics",
+    "ReferencePhaseEvent",
+    "ReferencePhaseProfile",
+    "ReferenceRepetition",
+    "ReferenceTrajectoryPoint",
+    "ReferenceTrajectory",
+    "ReferenceSourceVideo",
+    "ReferenceConfiguration",
+    "build_reference_profile",
+    "now_iso",
 ]
