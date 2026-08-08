@@ -7,3 +7,6 @@ __pycache__/
 *.pyc
 .DS_Store
 .venv/
+
+# Generated diagnostic artifacts (annotated videos, etc.) in the backend package
+src/backend/output/
