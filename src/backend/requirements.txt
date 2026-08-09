@@ -16,4 +16,9 @@ numpy==1.26.4
 # Step 5: DTW temporal alignment of normalized movement trajectories.
 # Pure-Python fallback is used when the compiled C modules are unavailable,
 # which is fine for the hackathon demo (see src/comparison/dtw_comparator.py).
-dtaidistance>=2.3.10
+dtaidistance==2.4.0
+
+# Frontend API (FastAPI) serving the Step 5 comparison pipeline.
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9

@@ -1,0 +1,250 @@
+{
+  "exercise_id": "elbow_flexion",
+  "exercise_name": "Elbow Flexion / Extension",
+  "created_at": "2026-08-08T10:49:13.152459+00:00",
+  "source_video": {
+    "path": "D:\\TECHFORGOOD\\health-team-264-trixel\\src\\REFERENCE VIDEOS\\reference_video.mp4",
+    "fps": 30.0,
+    "frame_count": 252,
+    "pose_frames": 252,
+    "width": 1920,
+    "height": 1080
+  },
+  "primary_angle": "right_elbow",
+  "movement_type": "flexion_extension",
+  "supported_landmarks": [
+    "right_shoulder",
+    "right_elbow",
+    "right_wrist"
+  ],
+  "available_landmarks": [
+    "left_ear",
+    "left_elbow",
+    "left_eye",
+    "left_hip",
+    "left_shoulder",
+    "left_wrist",
+    "nose",
+    "right_ear",
+    "right_elbow",
+    "right_eye",
+    "right_hip",
+    "right_shoulder",
+    "right_wrist"
+  ],
+  "angle_statistics": {
+    "left_elbow": {
+      "min_angle": 78.48,
+      "max_angle": 174.98,
+      "mean_angle": 133.75,
+      "range": 96.5,
+      "start_angle": 170.03,
+      "bottom_angle": null,
+      "end_angle": 117.29,
+      "valid_frames": 251
+    },
+    "right_elbow": {
+      "min_angle": 58.51,
+      "max_angle": 174.67,
+      "mean_angle": 125.27,
+      "range": 116.16,
+      "start_angle": 173.2,
+      "bottom_angle": null,
+      "end_angle": 78.48,
+      "valid_frames": 252
+    },
+    "left_shoulder": {
+      "min_angle": 105.99,
+      "max_angle": 132.91,
+      "mean_angle": 116.9,
+      "range": 26.92,
+      "start_angle": 130.69,
+      "bottom_angle": null,
+      "end_angle": 119.62,
+      "valid_frames": 147
+    },
+    "right_shoulder": {
+      "min_angle": 109.38,
+      "max_angle": 140.09,
+      "mean_angle": 125.51,
+      "range": 30.71,
+      "start_angle": 136.72,
+      "bottom_angle": null,
+      "end_angle": 129.94,
+      "valid_frames": 158
+    }
+  },
+  "phase_profile": {
+    "sequence": [
+      "flexing",
+      "bottom",
+      "extending",
+      "start",
+      "flexing",
+      "bottom"
+    ],
+    "events": [
+      {
+        "phase": "flexing",
+        "frame_index": 54,
+        "timestamp": 1.8,
+        "angle": 80.59
+      },
+      {
+        "phase": "bottom",
+        "frame_index": 55,
+        "timestamp": 1.8333333333333333,
+        "angle": 79.36
+      },
+      {
+        "phase": "extending",
+        "frame_index": 71,
+        "timestamp": 2.3666666666666667,
+        "angle": 89.07
+      },
+      {
+        "phase": "start",
+        "frame_index": 153,
+        "timestamp": 5.1,
+        "angle": 154.63
+      },
+      {
+        "phase": "flexing",
+        "frame_index": 222,
+        "timestamp": 7.4,
+        "angle": 79.18
+      },
+      {
+        "phase": "bottom",
+        "frame_index": 223,
+        "timestamp": 7.433333333333334,
+        "angle": 78.84
+      }
+    ]
+  },
+  "repetitions": [
+    {
+      "rep_number": 1,
+      "start_frame": 54,
+      "bottom_frame": 55,
+      "end_frame": 153,
+      "start_timestamp": 1.8,
+      "bottom_timestamp": 1.8333333333333333,
+      "end_timestamp": 5.1,
+      "min_angle": 65.49,
+      "max_angle": 154.63,
+      "duration": 3.3
+    }
+  ],
+  "reference_trajectory": {
+    "points": [
+      {
+        "progress": 0.0,
+        "angle": 77.12
+      },
+      {
+        "progress": 0.05,
+        "angle": 77.63
+      },
+      {
+        "progress": 0.1,
+        "angle": 70.16
+      },
+      {
+        "progress": 0.15,
+        "angle": 77.36
+      },
+      {
+        "progress": 0.2,
+        "angle": 101.82
+      },
+      {
+        "progress": 0.25,
+        "angle": 107.87
+      },
+      {
+        "progress": 0.3,
+        "angle": 109.06
+      },
+      {
+        "progress": 0.35,
+        "angle": 112.29
+      },
+      {
+        "progress": 0.4,
+        "angle": 115.5
+      },
+      {
+        "progress": 0.45,
+        "angle": 115.78
+      },
+      {
+        "progress": 0.5,
+        "angle": 113.24
+      },
+      {
+        "progress": 0.55,
+        "angle": 110.09
+      },
+      {
+        "progress": 0.6,
+        "angle": 111.03
+      },
+      {
+        "progress": 0.65,
+        "angle": 107.01
+      },
+      {
+        "progress": 0.7,
+        "angle": 112.47
+      },
+      {
+        "progress": 0.75,
+        "angle": 95.95
+      },
+      {
+        "progress": 0.8,
+        "angle": 78.99
+      },
+      {
+        "progress": 0.85,
+        "angle": 67.54
+      },
+      {
+        "progress": 0.9,
+        "angle": 76.79
+      },
+      {
+        "progress": 0.95,
+        "angle": 102.96
+      },
+      {
+        "progress": 1.0,
+        "angle": 149.85
+      }
+    ],
+    "num_points": 21,
+    "source_reps_used": 1,
+    "method": "linear_interp_percent_100"
+  },
+  "configuration": {
+    "exercise": "elbow_flexion",
+    "primary_angle": "right_elbow",
+    "movement_type": "flexion_extension",
+    "start_threshold": 151.438,
+    "end_threshold": 151.438,
+    "bottom_threshold": 81.74199999999999,
+    "min_rep_duration": 0.3,
+    "min_time_between_reps": 0.2,
+    "min_movement_range": 30.0,
+    "smoothing_window": 5,
+    "variants": []
+  },
+  "primary_min_angle": 58.51,
+  "primary_max_angle": 174.67,
+  "primary_mean_angle": 125.27,
+  "primary_range": 116.16,
+  "primary_start_angle": 173.2,
+  "primary_bottom_angle": 58.51,
+  "primary_end_angle": 78.48
+}

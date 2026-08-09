@@ -1,29 +1,69 @@
-# <!-- Team name --> · Tech for Good 2026
+# OrthoRehab AI — Full-Stack Demo
 
-Team repository for **Build with AI: Code for Communities** — GDG Coimbatore
-(hackathon **Aug 8–9, 2026**, GRD College).
+AI-powered rehabilitation movement monitoring. A patient records an exercise
+(elbow flexion/extension), the backend compares their movement against a
+therapist reference using DTW + biomechanical + speed analysis, and the frontend
+presents scored results and corrective guidance.
 
-Everything your team does lives here from day one: the proposal, code, docs, and
-progress. Organizers follow along through this repo, so keep it active.
+## Architecture
 
-## Start here
-1. **Fill in [`PROPOSAL.md`](./PROPOSAL.md)** and commit it by **Jul 24, 11:59 PM IST**. That's your Ideation-Phase submission.
-2. **Add your teammates** as collaborators (Settings → Collaborators), or ask your organizer to add them by GitHub username.
-3. **Build in the open** — commit early and often. Put source in `/src`, notes and diagrams in `/docs`.
+```
+┌─────────────────────────────┐       ┌──────────────────────────────────────────┐
+│  Frontend (React + Vite)    │  HTTP │  Backend (FastAPI)                        │
+│  Login → Dashboard → Upload │──────▶│  POST /api/v1/exercises/analyze           │
+│  → Results / Capture error  │       │  Step5Pipeline (MediaPipe → angles → DTW) │
+└─────────────────────────────┘       └──────────────────────────────────────────┘
+                                          Reference video (therapist baseline)
+```
 
-## Repo layout
-| Path | For |
-|------|-----|
-| `PROPOSAL.md` | Your architecture proposal (the submission) |
-| `/src` | Application code |
-| `/docs` | Design notes, diagrams, research |
-| Issues | Track tasks; use the **Progress update** template for weekly check-ins |
+- **Frontend** lives in [`frontend/`](frontend/README.md).
+- **Backend** (Steps 1–5 pipeline + FastAPI) lives in
+  [`src/backend/`](src/backend/README.md).
 
-## Ground rules
-- Teams are **2–4 people**.
-- Keep the repo **public** — it's part of the open-source, tech-for-good spirit and helps judging.
-- Use the four SDG tracks; build something that helps a real community.
+## Key behaviors
 
-Questions? Ping the organizers in the mixer WhatsApp group or open an issue.
+- **Valid-but-poor exercise** → scored (`status: success`) with corrective
+  feedback and a lower score.
+- **Identical reference** → very high score (baseline).
+- **Capture-quality failure** (e.g. wrist not tracked) → `status:
+  capture_quality_failed` with a re-record instruction, **no** misleading score.
 
-— GDG Coimbatore · TiE Kovai Con · GRD College · Startup Culture
+## Quick start
+
+### 1. Backend
+
+```bash
+cd src/backend
+python -m pip install -r requirements.txt
+# set env (see .env.example)
+set DEFAULT_REFERENCE_VIDEO=..\REFERENCE VIDEOS\reference_video.mp4
+python -m uvicorn src.api:app --reload --port 8000
+```
+
+### 2. Frontend
+
+```bash
+cd frontend
+npm install
+cp .env.example .env   # VITE_API_BASE_URL=http://localhost:8000
+npm run dev            # http://localhost:5173
+```
+
+## Backend tests
+
+```bash
+cd src/backend
+python -m tests.test_comparison
+python -m tests.test_capture_quality
+python -m tests.test_step5_end_to_end
+python -m tests.test_feedback
+```
+
+## Deployment
+
+- Frontend → **Vercel** or **Netlify** (root dir `frontend`, env
+  `VITE_API_BASE_URL`).
+- Backend → **Render** / **Railway** / **Fly** (Python, run `uvicorn src.api:app`).
+- Set `CORS_ORIGINS` on the backend to include your frontend origin.
+
+See [`frontend/README.md`](frontend/README.md) for step-by-step deployment.

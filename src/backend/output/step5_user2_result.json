@@ -1,0 +1,521 @@
+{
+  "status": "success",
+  "scored": true,
+  "comparison": {
+    "exercise_id": "elbow_flexion",
+    "exercise_name": "Elbow Flexion / Extension",
+    "overall_score": 0.484,
+    "learned_motion_similarity": null,
+    "dtw_similarity": 0.215,
+    "biomechanical_accuracy": 0.46289600550964194,
+    "rom_accuracy": 0.7128960055096419,
+    "reference_duration": 3.3,
+    "patient_duration": 2.503,
+    "speed_ratio": 1.318,
+    "speed_status": "normal_speed",
+    "primary_angle": "right_elbow",
+    "repetitions": [
+      {
+        "rep_number": 1,
+        "start_timestamp": 0.5006789652247667,
+        "end_timestamp": 3.0040737913486004,
+        "duration": 2.503,
+        "dtw_similarity": 0.215,
+        "dtw_distance": 67.38,
+        "learned_motion_similarity": null,
+        "biomechanical_accuracy": 0.31215564738292,
+        "movement_quality": 0.416,
+        "speed_status": "normal_speed",
+        "primary_min_angle": 66.4,
+        "primary_max_angle": 131.7,
+        "reference_min_angle": 58.51,
+        "reference_max_angle": 174.67,
+        "rom_accuracy": 0.56215564738292,
+        "deviations": [
+          {
+            "type": "insufficient_extension",
+            "joint": "right_elbow",
+            "reference_value": 174.67,
+            "patient_value": 131.7,
+            "deviation": -42.97,
+            "severity": "major",
+            "timestamp": 0.0,
+            "message": ""
+          }
+        ],
+        "severity": "major"
+      },
+      {
+        "rep_number": 2,
+        "start_timestamp": 3.6048885496183205,
+        "end_timestamp": 6.141661973423806,
+        "duration": 2.537,
+        "dtw_similarity": 0.088,
+        "dtw_distance": 80.119,
+        "learned_motion_similarity": null,
+        "biomechanical_accuracy": 0.3183539944903583,
+        "movement_quality": 0.374,
+        "speed_status": "normal_speed",
+        "primary_min_angle": 62.03,
+        "primary_max_angle": 128.05,
+        "reference_min_angle": 58.51,
+        "reference_max_angle": 174.67,
+        "rom_accuracy": 0.5683539944903583,
+        "deviations": [
+          {
+            "type": "insufficient_extension",
+            "joint": "right_elbow",
+            "reference_value": 174.67,
+            "patient_value": 128.05,
+            "deviation": -46.62,
+            "severity": "major",
+            "timestamp": 0.0,
+            "message": ""
+          }
+        ],
+        "severity": "major"
+      },
+      {
+        "rep_number": 3,
+        "start_timestamp": 6.442069352558665,
+        "end_timestamp": 8.778571190274244,
+        "duration": 2.337,
+        "dtw_similarity": 0.522,
+        "dtw_distance": 39.314,
+        "learned_motion_similarity": null,
+        "biomechanical_accuracy": 0.21782024793388427,
+        "movement_quality": 0.481,
+        "speed_status": "normal_speed",
+        "primary_min_angle": 67.62,
+        "primary_max_angle": 127.77,
+        "reference_min_angle": 58.51,
+        "reference_max_angle": 174.67,
+        "rom_accuracy": 0.5178202479338843,
+        "deviations": [
+          {
+            "type": "insufficient_flexion",
+            "joint": "right_elbow",
+            "reference_value": 58.51,
+            "patient_value": 67.62,
+            "deviation": 9.11,
+            "severity": "minor",
+            "timestamp": 0.0,
+            "message": ""
+          },
+          {
+            "type": "insufficient_extension",
+            "joint": "right_elbow",
+            "reference_value": 174.67,
+            "patient_value": 127.77,
+            "deviation": -46.9,
+            "severity": "major",
+            "timestamp": 0.0,
+            "message": ""
+          }
+        ],
+        "severity": "major"
+      },
+      {
+        "rep_number": 4,
+        "start_timestamp": 11.04831583262652,
+        "end_timestamp": 11.515616200169635,
+        "duration": 0.467,
+        "dtw_similarity": 0.132,
+        "dtw_distance": 71.448,
+        "learned_motion_similarity": null,
+        "biomechanical_accuracy": 0.09948347107438027,
+        "movement_quality": 0.211,
+        "speed_status": "too_fast",
+        "primary_min_angle": 70.69,
+        "primary_max_angle": 128.71,
+        "reference_min_angle": 58.51,
+        "reference_max_angle": 174.67,
+        "rom_accuracy": 0.4994834710743803,
+        "deviations": [
+          {
+            "type": "insufficient_flexion",
+            "joint": "right_elbow",
+            "reference_value": 58.51,
+            "patient_value": 70.69,
+            "deviation": 12.18,
+            "severity": "moderate",
+            "timestamp": 0.0,
+            "message": ""
+          },
+          {
+            "type": "insufficient_extension",
+            "joint": "right_elbow",
+            "reference_value": 174.67,
+            "patient_value": 128.71,
+            "deviation": -45.96,
+            "severity": "major",
+            "timestamp": 0.0,
+            "message": ""
+          }
+        ],
+        "severity": "major"
+      },
+      {
+        "rep_number": 5,
+        "start_timestamp": 11.916159372349448,
+        "end_timestamp": 12.450216935255867,
+        "duration": 0.534,
+        "dtw_similarity": 0.11,
+        "dtw_distance": 73.427,
+        "learned_motion_similarity": null,
+        "biomechanical_accuracy": 0.22961432506887064,
+        "movement_quality": 0.262,
+        "speed_status": "too_fast",
+        "primary_min_angle": 68.56,
+        "primary_max_angle": 130.08,
+        "reference_min_angle": 58.51,
+        "reference_max_angle": 174.67,
+        "rom_accuracy": 0.5296143250688706,
+        "deviations": [
+          {
+            "type": "insufficient_flexion",
+            "joint": "right_elbow",
+            "reference_value": 58.51,
+            "patient_value": 68.56,
+            "deviation": 10.05,
+            "severity": "minor",
+            "timestamp": 0.0,
+            "message": ""
+          },
+          {
+            "type": "insufficient_extension",
+            "joint": "right_elbow",
+            "reference_value": 174.67,
+            "patient_value": 130.08,
+            "deviation": -44.59,
+            "severity": "major",
+            "timestamp": 0.0,
+            "message": ""
+          }
+        ],
+        "severity": "major"
+      }
+    ],
+    "deviations": [
+      {
+        "type": "insufficient_extension",
+        "joint": "right_elbow",
+        "reference_value": 174.67,
+        "patient_value": 143.49,
+        "deviation": -31.18,
+        "severity": "major",
+        "timestamp": 0.0,
+        "message": ""
+      },
+      {
+        "type": "trajectory_deviation",
+        "joint": "right_elbow",
+        "reference_value": 149.85,
+        "patient_value": 123.87,
+        "deviation": 20.14,
+        "severity": "moderate",
+        "timestamp": 0.0,
+        "message": ""
+      }
+    ],
+    "feedback_events": [],
+    "timings_ms": {
+      "patient_angles": 13.25,
+      "patient_mediapipe": 19794147.104,
+      "patient_reps": 8.578,
+      "reference_angles": 10.441,
+      "reference_mediapipe": 65258.269,
+      "reference_profile": 3.4,
+      "reference_reps": 7.628
+    },
+    "learned_model_available": false
+  },
+  "report": {
+    "summary": {
+      "exercise_id": "elbow_flexion",
+      "exercise_name": "Elbow Flexion / Extension",
+      "total_repetitions": 5,
+      "successful_repetitions": 0,
+      "overall_score": 0.484,
+      "learned_motion_similarity": null,
+      "dtw_similarity": 0.215,
+      "biomechanical_accuracy": 0.46289600550964194,
+      "speed_status": "normal_speed",
+      "major_deviations": [
+        {
+          "type": "insufficient_extension",
+          "joint": "right_elbow",
+          "reference_value": 174.67,
+          "patient_value": 143.49,
+          "deviation": -31.18,
+          "severity": "major",
+          "timestamp": 0.0,
+          "message": ""
+        },
+        {
+          "type": "trajectory_deviation",
+          "joint": "right_elbow",
+          "reference_value": 149.85,
+          "patient_value": 123.87,
+          "deviation": 20.14,
+          "severity": "moderate",
+          "timestamp": 0.0,
+          "message": ""
+        }
+      ],
+      "patient_feedback": "Try straightening a little more at the end of the movement. Keep the movement smooth and controlled.",
+      "therapist_report": "Exercise: Elbow Flexion / Extension (elbow_flexion)\nPrimary angle: right_elbow\nOverall score: 0.484\nLearned motion similarity: None\nDTW similarity: 0.215\nBiomechanical accuracy: 0.46289600550964194\nROM accuracy: 0.7128960055096419\nReference duration: 3.3s\nPatient duration: 2.503s\nSpeed ratio: 1.318\nSpeed status: normal_speed\nTotal reps: 5\n  Rep 1: duration=2.503s dtw=0.215 rom_acc=0.56215564738292 speed=normal_speed severity=major\n  Rep 2: duration=2.537s dtw=0.088 rom_acc=0.5683539944903583 speed=normal_speed severity=major\n  Rep 3: duration=2.337s dtw=0.522 rom_acc=0.5178202479338843 speed=normal_speed severity=major\n  Rep 4: duration=0.467s dtw=0.132 rom_acc=0.4994834710743803 speed=too_fast severity=major\n  Rep 5: duration=0.534s dtw=0.11 rom_acc=0.5296143250688706 speed=too_fast severity=major\nDeviations:\n  - insufficient_extension (right_elbow) ref=174.67 pat=143.49 dev=-31.18 sev=major\n  - trajectory_deviation (right_elbow) ref=149.85 pat=123.87 dev=20.14 sev=moderate",
+      "created_at": "2026-08-09T00:52:28.165253+00:00",
+      "timings_ms": {
+        "comparison": 23.957,
+        "patient_angles": 13.25,
+        "patient_mediapipe": 19794147.104,
+        "patient_reps": 8.578,
+        "reference_angles": 10.441,
+        "reference_mediapipe": 65258.269,
+        "reference_profile": 3.4,
+        "reference_reps": 7.628
+      }
+    },
+    "comparison": {
+      "exercise_id": "elbow_flexion",
+      "exercise_name": "Elbow Flexion / Extension",
+      "overall_score": 0.484,
+      "learned_motion_similarity": null,
+      "dtw_similarity": 0.215,
+      "biomechanical_accuracy": 0.46289600550964194,
+      "rom_accuracy": 0.7128960055096419,
+      "reference_duration": 3.3,
+      "patient_duration": 2.503,
+      "speed_ratio": 1.318,
+      "speed_status": "normal_speed",
+      "primary_angle": "right_elbow",
+      "repetitions": [
+        {
+          "rep_number": 1,
+          "start_timestamp": 0.5006789652247667,
+          "end_timestamp": 3.0040737913486004,
+          "duration": 2.503,
+          "dtw_similarity": 0.215,
+          "dtw_distance": 67.38,
+          "learned_motion_similarity": null,
+          "biomechanical_accuracy": 0.31215564738292,
+          "movement_quality": 0.416,
+          "speed_status": "normal_speed",
+          "primary_min_angle": 66.4,
+          "primary_max_angle": 131.7,
+          "reference_min_angle": 58.51,
+          "reference_max_angle": 174.67,
+          "rom_accuracy": 0.56215564738292,
+          "deviations": [
+            {
+              "type": "insufficient_extension",
+              "joint": "right_elbow",
+              "reference_value": 174.67,
+              "patient_value": 131.7,
+              "deviation": -42.97,
+              "severity": "major",
+              "timestamp": 0.0,
+              "message": ""
+            }
+          ],
+          "severity": "major"
+        },
+        {
+          "rep_number": 2,
+          "start_timestamp": 3.6048885496183205,
+          "end_timestamp": 6.141661973423806,
+          "duration": 2.537,
+          "dtw_similarity": 0.088,
+          "dtw_distance": 80.119,
+          "learned_motion_similarity": null,
+          "biomechanical_accuracy": 0.3183539944903583,
+          "movement_quality": 0.374,
+          "speed_status": "normal_speed",
+          "primary_min_angle": 62.03,
+          "primary_max_angle": 128.05,
+          "reference_min_angle": 58.51,
+          "reference_max_angle": 174.67,
+          "rom_accuracy": 0.5683539944903583,
+          "deviations": [
+            {
+              "type": "insufficient_extension",
+              "joint": "right_elbow",
+              "reference_value": 174.67,
+              "patient_value": 128.05,
+              "deviation": -46.62,
+              "severity": "major",
+              "timestamp": 0.0,
+              "message": ""
+            }
+          ],
+          "severity": "major"
+        },
+        {
+          "rep_number": 3,
+          "start_timestamp": 6.442069352558665,
+          "end_timestamp": 8.778571190274244,
+          "duration": 2.337,
+          "dtw_similarity": 0.522,
+          "dtw_distance": 39.314,
+          "learned_motion_similarity": null,
+          "biomechanical_accuracy": 0.21782024793388427,
+          "movement_quality": 0.481,
+          "speed_status": "normal_speed",
+          "primary_min_angle": 67.62,
+          "primary_max_angle": 127.77,
+          "reference_min_angle": 58.51,
+          "reference_max_angle": 174.67,
+          "rom_accuracy": 0.5178202479338843,
+          "deviations": [
+            {
+              "type": "insufficient_flexion",
+              "joint": "right_elbow",
+              "reference_value": 58.51,
+              "patient_value": 67.62,
+              "deviation": 9.11,
+              "severity": "minor",
+              "timestamp": 0.0,
+              "message": ""
+            },
+            {
+              "type": "insufficient_extension",
+              "joint": "right_elbow",
+              "reference_value": 174.67,
+              "patient_value": 127.77,
+              "deviation": -46.9,
+              "severity": "major",
+              "timestamp": 0.0,
+              "message": ""
+            }
+          ],
+          "severity": "major"
+        },
+        {
+          "rep_number": 4,
+          "start_timestamp": 11.04831583262652,
+          "end_timestamp": 11.515616200169635,
+          "duration": 0.467,
+          "dtw_similarity": 0.132,
+          "dtw_distance": 71.448,
+          "learned_motion_similarity": null,
+          "biomechanical_accuracy": 0.09948347107438027,
+          "movement_quality": 0.211,
+          "speed_status": "too_fast",
+          "primary_min_angle": 70.69,
+          "primary_max_angle": 128.71,
+          "reference_min_angle": 58.51,
+          "reference_max_angle": 174.67,
+          "rom_accuracy": 0.4994834710743803,
+          "deviations": [
+            {
+              "type": "insufficient_flexion",
+              "joint": "right_elbow",
+              "reference_value": 58.51,
+              "patient_value": 70.69,
+              "deviation": 12.18,
+              "severity": "moderate",
+              "timestamp": 0.0,
+              "message": ""
+            },
+            {
+              "type": "insufficient_extension",
+              "joint": "right_elbow",
+              "reference_value": 174.67,
+              "patient_value": 128.71,
+              "deviation": -45.96,
+              "severity": "major",
+              "timestamp": 0.0,
+              "message": ""
+            }
+          ],
+          "severity": "major"
+        },
+        {
+          "rep_number": 5,
+          "start_timestamp": 11.916159372349448,
+          "end_timestamp": 12.450216935255867,
+          "duration": 0.534,
+          "dtw_similarity": 0.11,
+          "dtw_distance": 73.427,
+          "learned_motion_similarity": null,
+          "biomechanical_accuracy": 0.22961432506887064,
+          "movement_quality": 0.262,
+          "speed_status": "too_fast",
+          "primary_min_angle": 68.56,
+          "primary_max_angle": 130.08,
+          "reference_min_angle": 58.51,
+          "reference_max_angle": 174.67,
+          "rom_accuracy": 0.5296143250688706,
+          "deviations": [
+            {
+              "type": "insufficient_flexion",
+              "joint": "right_elbow",
+              "reference_value": 58.51,
+              "patient_value": 68.56,
+              "deviation": 10.05,
+              "severity": "minor",
+              "timestamp": 0.0,
+              "message": ""
+            },
+            {
+              "type": "insufficient_extension",
+              "joint": "right_elbow",
+              "reference_value": 174.67,
+              "patient_value": 130.08,
+              "deviation": -44.59,
+              "severity": "major",
+              "timestamp": 0.0,
+              "message": ""
+            }
+          ],
+          "severity": "major"
+        }
+      ],
+      "deviations": [
+        {
+          "type": "insufficient_extension",
+          "joint": "right_elbow",
+          "reference_value": 174.67,
+          "patient_value": 143.49,
+          "deviation": -31.18,
+          "severity": "major",
+          "timestamp": 0.0,
+          "message": ""
+        },
+        {
+          "type": "trajectory_deviation",
+          "joint": "right_elbow",
+          "reference_value": 149.85,
+          "patient_value": 123.87,
+          "deviation": 20.14,
+          "severity": "moderate",
+          "timestamp": 0.0,
+          "message": ""
+        }
+      ],
+      "feedback_events": [],
+      "timings_ms": {
+        "patient_angles": 13.25,
+        "patient_mediapipe": 19794147.104,
+        "patient_reps": 8.578,
+        "reference_angles": 10.441,
+        "reference_mediapipe": 65258.269,
+        "reference_profile": 3.4,
+        "reference_reps": 7.628
+      },
+      "learned_model_available": false
+    }
+  },
+  "timings_ms": {
+    "comparison": 23.957,
+    "patient_angles": 13.25,
+    "patient_mediapipe": 19794147.104,
+    "patient_reps": 8.578,
+    "reference_angles": 10.441,
+    "reference_mediapipe": 65258.269,
+    "reference_profile": 3.4,
+    "reference_reps": 7.628,
+    "session_report": 0.053
+  }
+}

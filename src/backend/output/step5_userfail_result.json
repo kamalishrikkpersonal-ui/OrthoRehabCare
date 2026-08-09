@@ -1,0 +1,26 @@
+{
+  "status": "capture_quality_failed",
+  "scored": false,
+  "capture_quality_error": {
+    "code": "INSUFFICIENT_LANDMARK_VISIBILITY",
+    "message": "We couldn't reliably see your right wrist during the recording (316/498 frames usable).",
+    "user_instruction": "Please record again while keeping your full exercising arm visible in the camera frame.",
+    "missing_landmarks": [
+      "right_shoulder",
+      "right_elbow",
+      "right_wrist"
+    ],
+    "valid_angle_ratio": 0.6345,
+    "total_frames": 498,
+    "valid_frames": 316,
+    "missing_frames": 182
+  },
+  "timings_ms": {
+    "patient_angles": 15.891,
+    "patient_mediapipe": 125264.664,
+    "reference_angles": 14.625,
+    "reference_mediapipe": 834370.022,
+    "reference_profile": 4.344,
+    "reference_reps": 7.99
+  }
+}

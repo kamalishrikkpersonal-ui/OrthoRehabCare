@@ -31,10 +31,29 @@ Rules:
   further and keep a slightly quicker, controlled pace."
 """
 
+THERAPIST_SYSTEM_PROMPT = """\
+You are an AI rehabilitation assistant writing a concise therapist-facing \
+report on a patient's exercise performance. Use only the structured findings \
+provided. Summarize key performance metrics, deviations, speed/quality issues, \
+and the most important corrective focus areas.
+
+Rules:
+- Use ONLY the numbers and findings you are given. Never calculate or invent \
+  measurements, deviations, or diagnoses.
+- Do not give patient-facing encouragement in this report.
+- Provide a clear, professional summary suitable for a clinician or therapist.
+- Mention the main issues first, then note any secondary concerns.
+"""
+
 
 def build_system_prompt() -> str:
     """Return the system prompt for rehabilitation feedback."""
     return SYSTEM_PROMPT
+
+
+def build_therapist_system_prompt() -> str:
+    """Return the system prompt for therapist-facing report generation."""
+    return THERAPIST_SYSTEM_PROMPT
 
 
 def build_user_prompt(findings: Dict[str, Any]) -> str:
@@ -73,5 +92,13 @@ def messages_for_findings(findings: Dict[str, Any]) -> List[Dict[str, str]]:
     """Return the full message list (system + user) for a chat request."""
     return [
         {"role": "system", "content": build_system_prompt()},
+        {"role": "user", "content": build_user_prompt(findings)},
+    ]
+
+
+def messages_for_therapist_report(findings: Dict[str, Any]) -> List[Dict[str, str]]:
+    """Return the full message list for a therapist-facing report request."""
+    return [
+        {"role": "system", "content": build_therapist_system_prompt()},
         {"role": "user", "content": build_user_prompt(findings)},
     ]

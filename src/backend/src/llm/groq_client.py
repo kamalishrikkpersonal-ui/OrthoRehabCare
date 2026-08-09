@@ -1,8 +1,9 @@
-"""Minimal Groq LLM client for OrthoRehab AI Step 5.
+"""Minimal Groq/OpenAI-compatible LLM client for OrthoRehab AI Step 5.
 
-Uses the standard-library ``urllib`` (no HTTP dependency) to call the Groq
-chat-completions API. It follows the project's configuration convention by
-reading the API key from the ``GROQ_API_KEY`` environment variable.
+Uses the standard-library ``urllib`` (no HTTP dependency) to call a chat
+completions API. It reads the API key from ``GROQ_API_KEY`` or ``OPENAI_API_KEY``
+environment variables. A custom endpoint may also be supplied with
+``LLM_API_URL`` or via the client constructor.
 
 The client ALWAYS surfaces a deterministic fallback path: callers catch
 :class:`LLMUnavailableError` (or any exception) and use fallback templates. The
@@ -26,15 +27,18 @@ class LLMUnavailableError(Exception):
 
 
 DEFAULT_GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-DEFAULT_MODEL = "llama-3.1-8b-instant"
+DEFAULT_OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+DEFAULT_GROQ_MODEL = "llama-3.1-8b-instant"
+DEFAULT_OPENAI_MODEL = "gpt-3.5-turbo"
 DEFAULT_TIMEOUT = 15.0  # seconds
 
 
 class GroqClient:
-    """A thin, dependency-free Groq chat client.
+    """A thin, dependency-free Groq/OpenAI chat client.
 
     Args:
-        api_key: Groq API key. If None, read from ``GROQ_API_KEY`` env var.
+        api_key: API key for Groq or OpenAI. If None, read from ``GROQ_API_KEY``
+            or ``OPENAI_API_KEY`` env vars.
         model: model id to use.
         url: API endpoint.
         timeout: request timeout in seconds.
@@ -43,18 +47,33 @@ class GroqClient:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        model: str = DEFAULT_MODEL,
-        url: str = DEFAULT_GROQ_URL,
+        model: Optional[str] = None,
+        url: Optional[str] = None,
         timeout: float = DEFAULT_TIMEOUT,
     ) -> None:
-        self.api_key = api_key or os.environ.get("GROQ_API_KEY", "")
-        self.model = model
-        self.url = url
+        groq_key = os.environ.get("GROQ_API_KEY", "")
+        openai_key = os.environ.get("OPENAI_API_KEY", "")
+
+        self.api_key = api_key or groq_key or openai_key
+        self.url = url or os.environ.get("LLM_API_URL", "")
+        if not self.url:
+            self.url = DEFAULT_OPENAI_URL if openai_key else DEFAULT_GROQ_URL
+
+        env_model = os.environ.get("LLM_MODEL", "")
+        if model:
+            self.model = model
+        elif env_model:
+            self.model = env_model
+        elif self.url == DEFAULT_OPENAI_URL:
+            self.model = DEFAULT_OPENAI_MODEL
+        else:
+            self.model = DEFAULT_GROQ_MODEL
+
         self.timeout = timeout
 
     @property
     def available(self) -> bool:
-        """Whether a Groq API key is configured."""
+        """Whether a Groq/OpenAI API key is configured."""
         return bool(self.api_key)
 
     def chat(
@@ -70,7 +89,7 @@ class GroqClient:
                 rate limit, malformed JSON, or empty response.
         """
         if not self.api_key:
-            raise LLMUnavailableError("GROQ_API_KEY is not set")
+            raise LLMUnavailableError("GROQ_API_KEY or OPENAI_API_KEY is not set")
 
         payload = {
             "model": self.model,

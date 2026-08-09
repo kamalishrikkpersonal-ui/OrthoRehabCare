@@ -352,12 +352,25 @@ only structured findings; the deterministic fallback templates in
 `feedback_templates.py` are used whenever the LLM is unavailable, times out, is
 rate-limited, or returns a malformed response.
 
-### LLM (Groq)
+### LLM (Groq / OpenAI)
 
-`GroqClient` uses the standard-library `urllib` and reads `GROQ_API_KEY`. The
-LLM receives only structured findings and must NOT calculate/invent
+`GroqClient` uses the standard-library `urllib`. It reads `GROQ_API_KEY` or
+`OPENAI_API_KEY`, and can also connect to a custom endpoint using `LLM_API_URL`.
+The LLM receives only structured findings and must NOT calculate/invent
 measurements, diagnose, or override the comparison engine. On any failure the
 system falls back to deterministic messages and keeps working.
+
+To use OpenAI instead of Groq, set:
+
+```powershell
+setx OPENAI_API_KEY "your-openai-key"
+```
+
+Optionally override the endpoint:
+
+```powershell
+setx LLM_API_URL "https://api.openai.com/v1/chat/completions"
+```
 
 ### Run Step 5 tests
 

@@ -1,15 +1,67 @@
-node_modules/
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Environment / Secrets
+# =========================
 .env
-.env.local
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+*.log
+*.out
+
+# =========================
+# Node / Frontend
+# =========================
+node_modules/
 dist/
 build/
-__pycache__/
-*.pyc
+.vite/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS
+# =========================
 .DS_Store
-.venv/
+Thumbs.db
 
-# Generated diagnostic artifacts (annotated videos, etc.) in the backend package
-src/backend/output/
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
 
-# Local exercise/reference videos
-src/REFERENCE VIDEOS/*.mp4
+# =========================
+# Local media / exercise videos
+# =========================
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# =========================
+# Python tooling
+# =========================
+.pyright/
+.mypy_cache/
+.ruff_cache/

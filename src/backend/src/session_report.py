@@ -45,6 +45,40 @@ def _patient_feedback(result: ComparisonResult) -> str:
     return fallback_message(dev_types)
 
 
+def _therapist_report_fallback(result: ComparisonResult) -> str:
+    """Return a raw therapist report when LLM-based report generation is unavailable."""
+    therapist_lines = [
+        f"Exercise: {result.exercise_name} ({result.exercise_id})",
+        f"Primary angle: {result.primary_angle}",
+        f"Overall score: {result.overall_score}",
+        f"Learned motion similarity: {result.learned_motion_similarity}",
+        f"DTW similarity: {result.dtw_similarity}",
+        f"Biomechanical accuracy: {result.biomechanical_accuracy}",
+        f"ROM accuracy: {result.rom_accuracy}",
+        f"Reference duration: {result.reference_duration}s",
+        f"Patient duration: {result.patient_duration}s",
+        f"Speed ratio: {result.speed_ratio}",
+        f"Speed status: {result.speed_status}",
+        f"Total reps: {len(result.repetitions)}",
+    ]
+    for i, rep in enumerate(result.repetitions, 1):
+        therapist_lines.append(
+            f"  Rep {i}: duration={rep.duration}s dtw={rep.dtw_similarity} "
+            f"rom_acc={rep.rom_accuracy} speed={rep.speed_status} "
+            f"severity={rep.severity}"
+        )
+    therapist_lines.append("Deviations:")
+    if result.deviations:
+        for d in result.deviations:
+            therapist_lines.append(
+                f"  - {d.type} ({d.joint}) ref={d.reference_value} "
+                f"pat={d.patient_value} dev={d.deviation} sev={d.severity}"
+            )
+    else:
+        therapist_lines.append("  - none")
+    return "\n".join(therapist_lines)
+
+
 def build_session_report(
     result: ComparisonResult,
     groq: Optional[GroqClient] = None,
@@ -87,37 +121,18 @@ def build_session_report(
             patient_text = _patient_feedback(result)
             source = "fallback"
 
-    # Therapist report: preserve raw structured metrics.
-    therapist_lines = [
-        f"Exercise: {result.exercise_name} ({result.exercise_id})",
-        f"Primary angle: {result.primary_angle}",
-        f"Overall score: {result.overall_score}",
-        f"Learned motion similarity: {result.learned_motion_similarity}",
-        f"DTW similarity: {result.dtw_similarity}",
-        f"Biomechanical accuracy: {result.biomechanical_accuracy}",
-        f"ROM accuracy: {result.rom_accuracy}",
-        f"Reference duration: {result.reference_duration}s",
-        f"Patient duration: {result.patient_duration}s",
-        f"Speed ratio: {result.speed_ratio}",
-        f"Speed status: {result.speed_status}",
-        f"Total reps: {len(result.repetitions)}",
-    ]
-    for i, rep in enumerate(result.repetitions, 1):
-        therapist_lines.append(
-            f"  Rep {i}: duration={rep.duration}s dtw={rep.dtw_similarity} "
-            f"rom_acc={rep.rom_accuracy} speed={rep.speed_status} "
-            f"severity={rep.severity}"
-        )
-    therapist_lines.append("Deviations:")
-    if result.deviations:
-        for d in result.deviations:
-            therapist_lines.append(
-                f"  - {d.type} ({d.joint}) ref={d.reference_value} "
-                f"pat={d.patient_value} dev={d.deviation} sev={d.severity}"
-            )
-    else:
-        therapist_lines.append("  - none")
-    therapist_report = "\n".join(therapist_lines)
+    # Therapist report: use the therapist-facing LLM prompt when available,
+    # otherwise fall back to raw structured metrics.
+    therapist_report = _therapist_report_fallback(result)
+    if groq is not None and groq.available:
+        try:
+            findings = result.to_dict()
+            msgs = messages_for_therapist_report(findings)
+            content = groq.chat(msgs)
+            if content:
+                therapist_report = content
+        except Exception:  # noqa: BLE001
+            therapist_report = _therapist_report_fallback(result)
 
     summary = SessionSummary(
         exercise_id=result.exercise_id,

@@ -109,6 +109,23 @@ def t_full_pipeline():
     assert result.learned_model_available is False
 
 
+def t_therapist_report_llm_fallback():
+    analysis, seq, cfg = build_analysis(full_rep())
+    ref_profile = build_reference_profile(seq, analysis, cfg)
+    pat_analysis, pat_seq, _ = build_analysis(full_rep())
+    result = ComparisonEngine().compare(ref_profile, pat_seq, patient_exercise_analysis=pat_analysis)
+
+    class FixedGroq(GroqClient):
+        def __init__(self):
+            super().__init__(api_key="x")
+
+        def chat(self, messages, **kwargs):
+            return "The patient moved quickly and under-extended the elbow; slow down and increase extension."
+
+    report = build_session_report(result, groq=FixedGroq(), timings_ms={"total": 5.0})
+    assert "slow down" in report.summary.therapist_report
+
+
 def t_json_roundtrip():
     analysis, seq, cfg = build_analysis(full_rep())
     ref_profile = build_reference_profile(seq, analysis, cfg)
