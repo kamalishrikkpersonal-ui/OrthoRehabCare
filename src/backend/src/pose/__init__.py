@@ -17,6 +17,13 @@ from .angle_engine import (
     angle_sequence_from_landmark_sequence,
     calculate_angle,
 )
+from .capture_quality import (
+    DEFAULT_MAX_MISSING_RATIO,
+    DEFAULT_MIN_VALID_ANGLE_RATIO,
+    CaptureQualityConfig,
+    CaptureQualityResult,
+    CaptureQualityValidator,
+)
 from .exercise_config import (
     MOVEMENT_TYPES,
     ExercisePhaseConfig,
@@ -75,6 +82,12 @@ __all__ = [
     "angle_sequence_from_landmark_sequence",
     "DEFAULT_ANGLE_DEFINITIONS",
     "DEFAULT_VISIBILITY_THRESHOLD",
+    # Capture quality
+    "CaptureQualityValidator",
+    "CaptureQualityConfig",
+    "CaptureQualityResult",
+    "DEFAULT_MIN_VALID_ANGLE_RATIO",
+    "DEFAULT_MAX_MISSING_RATIO",
     # Step 3 config
     "MOVEMENT_TYPES",
     "ExercisePhaseConfig",

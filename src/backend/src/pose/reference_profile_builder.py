@@ -159,6 +159,39 @@ def _normalize_cycle(
     return out
 
 
+def smooth_and_normalize_cycle(
+    raw_series: List[Optional[float]],
+    smoothing_window: int,
+    progress_samples: Optional[List[float]] = None,
+) -> Optional[List[float]]:
+    """Shared preprocessing: smooth + normalize a movement cycle to a 0..1 grid.
+
+    This is the SINGLE canonical preprocessing path for a movement cycle used by
+    both reference-trajectory construction (Step 4) and patient-cycle comparison
+    (Step 5). Keeping it shared guarantees reference and patient sequences go
+    through identical landmark/angle-independent transforms:
+
+        raw cycle
+        -> smoothing               (moving average, configurable window)
+        -> normalization           (keep only valid points)
+        -> resampling to 0..1 grid (uniform progress samples)
+
+    Args:
+        raw_series: the raw (unsmoothed) primary-angle values over a rep span
+            (None values allowed; they are skipped by smoothing/interpolation).
+        smoothing_window: the moving-average window used by the phase detector.
+        progress_samples: optional progress values (default 0..1 in 0.05 steps).
+
+    Returns:
+        A list of interpolated, smoothed angles on the progress grid, or None
+        if there are too few valid points to interpolate.
+    """
+    if progress_samples is None:
+        progress_samples = DEFAULT_PROGRESS_SAMPLES
+    smoothed = smooth_angles(list(raw_series), smoothing_window)
+    return _normalize_cycle(smoothed, progress_samples)
+
+
 def _build_trajectory(
     angle_sequence: AngleSequence,
     primary_angle: str,
@@ -172,10 +205,12 @@ def _build_trajectory(
 
     cycles: List[List[float]] = []
     for rep in repetitions:
-        smoothed = _smooth_series_for_rep(
-            angle_sequence, primary_angle, rep.start_frame, rep.end_frame, smoothing_window
-        )
-        cycle = _normalize_cycle(smoothed, progress_samples)
+        raw = [
+            af.angles.get(primary_angle)
+            for af in angle_sequence.frames
+            if rep.start_frame <= af.frame_index <= rep.end_frame
+        ]
+        cycle = smooth_and_normalize_cycle(raw, smoothing_window, progress_samples)
         if cycle is not None:
             cycles.append(cycle)
 

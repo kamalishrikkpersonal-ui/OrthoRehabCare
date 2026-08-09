@@ -12,3 +12,8 @@
 opencv-python==4.10.0.84
 mediapipe==0.10.9
 numpy==1.26.4
+
+# Step 5: DTW temporal alignment of normalized movement trajectories.
+# Pure-Python fallback is used when the compiled C modules are unavailable,
+# which is fine for the hackathon demo (see src/comparison/dtw_comparator.py).
+dtaidistance>=2.3.10
