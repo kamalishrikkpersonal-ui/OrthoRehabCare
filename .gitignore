@@ -10,3 +10,6 @@ __pycache__/
 
 # Generated diagnostic artifacts (annotated videos, etc.) in the backend package
 src/backend/output/
+
+# Local exercise/reference videos
+src/REFERENCE VIDEOS/*.mp4
