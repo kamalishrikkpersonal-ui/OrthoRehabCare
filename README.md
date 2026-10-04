@@ -1,4 +1,4 @@
-# OrthoRehab-AI (health-team-264-trixel)
+# OrthoRehab-AI 
 
 FastAPI backend + Vite React frontend for exercise-video analysis and structured therapist reports.
 
