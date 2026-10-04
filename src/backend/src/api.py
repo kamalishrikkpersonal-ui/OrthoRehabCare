@@ -28,7 +28,8 @@ Files are written to a temporary directory and deleted after analysis. No
 backend filesystem paths are ever exposed in the response.
 
 CORS is configured from ``CORS_ORIGINS`` (comma-separated) plus the local Vite
-dev origin. The LLM API key (``GROQ_API_KEY``) stays strictly on the backend.
+dev origin. The LLM API keys (``OPENAI_API_KEY`` / ``GROQ_API_KEY``) stay
+strictly on the backend and are never sent to the frontend.
 """
 
 from __future__ import annotations
@@ -139,8 +140,8 @@ def _save_upload(upload: UploadFile, suffix: str) -> str:
         traceback.print_exc()
         raise HTTPException(
             status_code=500,
-            detail=f"{type(exc).__name__}: {exc}"
-    )
+            detail=f"{type(exc).__name__}: {exc}",
+        )
     return tmp_path
 
 
@@ -166,6 +167,7 @@ def health() -> HealthResponse:
         exercise_name=DEFAULT_EXERCISE_NAME,
         default_reference_configured=bool(DEFAULT_REFERENCE_VIDEO),
     )
+
 
 @app.post("/api/v1/exercises/analyze")
 async def analyze_exercise(
@@ -268,6 +270,14 @@ async def analyze_exercise(
             result.status,
             result.scored,
         )
+
+        # Safe runtime source indicator for the therapist report (no secrets).
+        if result.report is not None and result.report.summary is not None:
+            tr = result.report.summary.therapist_report or ""
+            if tr and not tr.startswith("Exercise:"):
+                logger.info("Therapist report source: OPENAI")
+            else:
+                logger.info("Therapist report source: DETERMINISTIC_FALLBACK")
 
         # ---------------------------------------------------------
         # 5. Return frontend payload

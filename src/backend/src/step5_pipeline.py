@@ -22,6 +22,7 @@ from typing import Dict, Optional
 from .comparison.comparison_service import ComparisonEngine, EngineConfig
 from .feedback.feedback_service import FeedbackService, FeedbackServiceConfig
 from .llm.groq_client import GroqClient
+from .llm.openai_therapist_report import OpenAITherapistReporter
 from .performance import Timer
 from .schemas.comparison import CaptureQualityError, ComparisonResult
 from .session_report import SessionReport, build_session_report
@@ -63,6 +64,10 @@ class Step5Pipeline:
         engine_config: optional :class:`EngineConfig` for the comparison engine.
         feedback_config: optional :class:`FeedbackServiceConfig`.
         groq: optional :class:`GroqClient`.
+        openai_reporter: optional :class:`OpenAITherapistReporter` used only to
+            convert the deterministic analysis JSON into a human-readable
+            therapist report (presentation layer). Falls back to a structured
+            report if unavailable or on error.
     """
 
     def __init__(
@@ -71,10 +76,12 @@ class Step5Pipeline:
         engine_config: Optional[EngineConfig] = None,
         feedback_config: Optional[FeedbackServiceConfig] = None,
         groq: Optional[GroqClient] = None,
+        openai_reporter: Optional[OpenAITherapistReporter] = None,
     ) -> None:
         self.reference_profile = reference_profile
         self.engine = ComparisonEngine(config=engine_config)
         self.groq = groq or GroqClient()
+        self.openai_reporter = openai_reporter or OpenAITherapistReporter()
         self.feedback = FeedbackService(groq=self.groq, config=feedback_config)
         self.timer = Timer()
         self.capture_validator = CaptureQualityValidator()
@@ -184,7 +191,12 @@ class Step5Pipeline:
             result.timings_ms = self.timer.to_dict()
 
         with self.timer.time("session_report"):
-            report = build_session_report(result, groq=self.groq, timings_ms=self.timer.to_dict())
+            report = build_session_report(
+                result,
+                groq=self.groq,
+                timings_ms=self.timer.to_dict(),
+                openai_reporter=self.openai_reporter,
+            )
 
         return Step5Result(
             comparison=result,

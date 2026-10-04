@@ -323,3 +323,33 @@ class SessionSummary:
             created_at=data.get("created_at", ""),
             timings_ms=dict(data.get("timings_ms", {})),
         )
+
+@dataclass
+class ExerciseDetectionError:
+    code: str
+    message: str
+    user_instruction: str
+    detected_reps: int
+    valid_frames: int
+    min_required_reps: int = 1
+
+    def to_dict(self) -> dict:
+        return {
+            "code": self.code,
+            "message": self.message,
+            "user_instruction": self.user_instruction,
+            "detected_reps": self.detected_reps,
+            "valid_frames": self.valid_frames,
+            "min_required_reps": self.min_required_reps,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "ExerciseDetectionError":
+        return cls(
+            code=data["code"],
+            message=data["message"],
+            user_instruction=data["user_instruction"],
+            detected_reps=data["detected_reps"],
+            valid_frames=data["valid_frames"],
+            min_required_reps=data.get("min_required_reps", 1),
+        )
